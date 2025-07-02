@@ -2,6 +2,8 @@ import json
 import tempfile
 from pathlib import Path
 from csv_profile_transcriber import CSVProfileTranscriber
+import runpod
+import csv
 
 def handler(event):
     """
@@ -17,7 +19,6 @@ def handler(event):
         temp_csv = tempfile.NamedTemporaryFile(mode='w', suffix='.csv', delete=False, dir='/tmp', encoding='utf-8')
         csv_path = Path(temp_csv.name)
         
-        import csv
         fieldnames = ['Profile', 'Reel', 'Views', 'Likes', 'Comments']
         writer = csv.DictWriter(temp_csv, fieldnames=fieldnames)
         writer.writeheader()
@@ -69,4 +70,7 @@ def handler(event):
             "message": "Transcription completed successfully"
         }
     except Exception as e:
-        return {"success": False, "error": str(e)} 
+        return {"success": False, "error": str(e)}
+
+if __name__ == '__main__':
+    runpod.serverless.start({'handler': handler }) 

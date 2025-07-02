@@ -1,3 +1,4 @@
+runpod
 openai-whisper
 ffmpeg-python
 colorama 
